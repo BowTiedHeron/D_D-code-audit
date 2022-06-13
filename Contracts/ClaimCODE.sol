@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/utils/structs/BitMaps.sol";
 
-import "hardhat/console.sol";
+import "hardhat/console.sol"; // @audit to remove 
 
 contract ClaimCODE is Ownable, Pausable {
     using BitMaps for BitMaps.BitMap;
