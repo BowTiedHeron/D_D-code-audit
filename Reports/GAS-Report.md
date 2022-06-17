@@ -7,7 +7,6 @@
 - [`++i` costs less gas compared to `i++` or `i += 1` (same for `--i` vs `i--` or `i -= 1`)](#i-costs-less-gas-compared-to-i-or-i--1-same-for---i-vs-i---or-i---1)
 - [Increments/decrements can be unchecked in for-loops](#incrementsdecrements-can-be-unchecked-in-for-loops)
 - [No need to explicitly initialize variables with default values](#no-need-to-explicitly-initialize-variables-with-default-values)
-- [Functions guaranteed to revert when called by normal users can be marked `payable`](#functions-guaranteed-to-revert-when-called-by-normal-users-can-be-marked-payable)
 
 ## Remove import: `hardhat/console.sol`
 
@@ -156,18 +155,3 @@ MerkleProof.sol:30:        for (uint256 i = 0; i < proof.length; i++) {
 ```
 
 I suggest removing explicit initializations for default values.
-
-## Functions guaranteed to revert when called by normal users can be marked `payable`
-
-If a function modifier such as `onlyOwner` is used, the function will revert if a normal user tries to pay the function. Marking the function as `payable` will lower the gas cost for legitimate callers because the compiler will not include checks for whether a payment was provided.
-
-```solidity
-ClaimCODE.sol:62:    function setMerkleRoot(bytes32 _merkleRoot) external onlyOwner {
-ClaimCODE.sol:68:    function sweep20(address _tokenAddr) external onlyOwner {
-ClaimCODE.sol:75:    function sweep721(address _tokenAddr, uint256 _tokenID) external onlyOwner {
-ClaimCODE.sol:81:    function pause() external onlyOwner {
-ClaimCODE.sol:85:    function unpause() external onlyOwner {
-CODE.sol:24:     function mint(address _to, uint256 _amount) external onlyRole(MINTER_ROLE) {
-CODE.sol:28:     function sweep20(address _tokenAddr, address _to) external onlyRole(SWEEP_ROLE) {
-CODE.sol:38:     ) external onlyRole(SWEEP_ROLE) {
-```
