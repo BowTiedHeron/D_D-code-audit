@@ -14,7 +14,7 @@
 Before deployment (or before an audit), consider removing this import:
 
 ```solidity
-File: /Users/ravidaiman/Documents/github/contests/code-claim-site/packages/hardhat/src/ClaimCODE.sol
+File: ClaimCODE.sol
 11: import "hardhat/console.sol"; //@audit : this is debug-code. Remove it
 ```
 

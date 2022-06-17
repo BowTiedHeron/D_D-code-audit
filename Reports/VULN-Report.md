@@ -37,6 +37,8 @@ packages/hardhat/src/CODE.sol:
   40:         token.transferFrom(address(this), _to, _tokenID); 
 ```
 
+Warning: As the `onERC721Received` callback needs to be implemented for `safeTransferFrom` to work and there's a check on this callback's implementation: a potential path for a re-entrancy attack is created. It's mandatory to add a re-entrancy guard here (Check Effect Interaction Pattern or nonReentrant modifier).
+
 ## Prevent accidentally burning tokens
 
 Transferring tokens to the zero address is usually prohibited to accidentally avoid "burning" tokens by sending them to an unrecoverable zero address.
@@ -95,7 +97,7 @@ This contract inherits from OpenZeppelin's libraries and the `transferOwnership(
 ## Events not indexed
 
 ```solidity
-File: /Users/ravidaiman/Documents/github/contests/code-claim-site/packages/hardhat/src/ClaimCODE.sol
+File: ClaimCODE.sol
 25:     event Sweep20(address _token);
 26:     event Sweep721(address _token, uint256 _tokenID);
 ```
@@ -103,7 +105,7 @@ File: /Users/ravidaiman/Documents/github/contests/code-claim-site/packages/hardh
 ## It's better to emit after all processing is done
 
 ```solidity
-File: /Users/ravidaiman/Documents/github/contests/code-claim-site/packages/hardhat/src/ClaimCODE.sol
+File: ClaimCODE.sol
 45:     function claimTokens(uint256 _amount, bytes32[] calldata _merkleProof) external whenNotPaused {
 ....
 53:         emit Claim(msg.sender, _amount); //@audit it's better to emit after all is done. Move this further down
@@ -116,7 +118,7 @@ File: /Users/ravidaiman/Documents/github/contests/code-claim-site/packages/hardh
 ## Avoid floating pragmas: the version should be locked
 
 ```solidity
-File: /Users/ravidaiman/Documents/github/contests/code-claim-site/packages/hardhat/src/low.md
+File: low.md
 183: ClaimCODE.sol:2:pragma solidity ^0.8.9;
 184: CODE.sol:2:pragma solidity ^0.8.9;
 185: MerkleProof.sol:4:pragma solidity ^0.8.9;
