@@ -37,7 +37,7 @@ packages/hardhat/src/CODE.sol:
   40:         token.transferFrom(address(this), _to, _tokenID); 
 ```
 
-Warning: As the `onERC721Received` callback needs to be implemented for `safeTransferFrom` to work and there's a check on this callback's implementation: a potential path for a re-entrancy attack is created. It's mandatory to add a re-entrancy guard here (Check Effect Interaction Pattern or nonReentrant modifier).
+**Important information to keep in mind**: as the `onERC721Received` callback needs to be implemented for `safeTransferFrom` to work and there's a check on this callback's implementation, a potential path for a re-entrancy attack is created. It's mandatory to be conscious of the necessity to respect the Check Effect Interaction Pattern here (or add a re-entrancy guard if unsure). In the current state of the solution: no new vulnerability is created. 
 
 ## Prevent accidentally burning tokens
 
