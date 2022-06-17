@@ -2,7 +2,6 @@
 
 - [Use safeTransfer/safeTransferFrom consistently instead of transfer/transferFrom](#use-safetransfersafetransferfrom-consistently-instead-of-transfertransferfrom)
 - [Using `transferFrom` on ERC721 tokens](#using-transferfrom-on-erc721-tokens)
-- [Prevent accidentally burning tokens](#prevent-accidentally-burning-tokens)
 - [Use a more recent version of solidity](#use-a-more-recent-version-of-solidity)
 - [`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`](#abiencodepacked-should-not-be-used-with-dynamic-types-when-passing-the-result-to-a-hash-function-such-as-keccak256)
 - [`ClaimCODE.sol` should implement a 2-step ownership transfer pattern](#claimcodesol-should-implement-a-2-step-ownership-transfer-pattern)
@@ -38,17 +37,6 @@ packages/hardhat/src/CODE.sol:
 ```
 
 **Important information to keep in mind**: as the `onERC721Received` callback needs to be implemented for `safeTransferFrom` to work and there's a check on this callback's implementation, a potential path for a re-entrancy attack is created. It's mandatory to be conscious of the necessity to respect the Check Effect Interaction Pattern here (or add a re-entrancy guard if unsure). In the current state of the solution: no new vulnerability is created. 
-
-## Prevent accidentally burning tokens
-
-Transferring tokens to the zero address is usually prohibited to accidentally avoid "burning" tokens by sending them to an unrecoverable zero address.
-
-Consider adding a check to prevent accidentally burning tokens here:
-
-```solidity
-packages/hardhat/src/CODE.sol:
-  30:         token.transfer(_to, token.balanceOf(address(this)));
-```
 
 ## Use a more recent version of solidity
 
